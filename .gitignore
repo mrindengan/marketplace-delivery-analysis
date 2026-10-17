@@ -1,0 +1,18 @@
+# Local Python environment (machine-specific, never commit)
+.venv/
+
+# Secrets (BPS API token, DB password)
+.env
+
+# Raw data: downloaded files are fetched by scripts, never committed
+data/raw/
+*.csv
+*.zip
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Power BI and editor files
+*.pbix.bak
+.vscode/
