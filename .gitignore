@@ -16,3 +16,6 @@ __pycache__/
 # Power BI and editor files
 *.pbix.bak
 .vscode/
+
+# Claude Code local settings (machine-specific)
+.claude/settings.local.json
