@@ -40,3 +40,14 @@ CREATE TABLE raw.sellers (
     seller_city text,
     seller_state text
 );
+
+DROP TABLE IF EXISTS raw.reviews;
+CREATE TABLE raw.reviews (
+    review_id text,
+    order_id text,
+    review_score text,
+    review_comment_title text,
+    review_comment_message text,
+    review_creation_date text,
+    review_answer_timestamp text
+);

@@ -12,4 +12,8 @@ SELECT 'customers',
 UNION ALL
 SELECT 'sellers',
        (SELECT COUNT(*) FROM raw.sellers),
-       (SELECT COUNT(*) FROM core.sellers);
+       (SELECT COUNT(*) FROM core.sellers)
+UNION ALL
+SELECT 'reviews',
+       (SELECT COUNT(*) FROM raw.reviews),
+       (SELECT COUNT(*) FROM core.reviews);

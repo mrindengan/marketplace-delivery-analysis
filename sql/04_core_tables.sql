@@ -85,6 +85,22 @@ SELECT  seller_id,
 FROM raw.sellers;
 ALTER TABLE core.sellers ADD PRIMARY KEY (seller_id);
 
+-- Table 5: reviews
+DROP TABLE IF EXISTS core.reviews CASCADE;
+CREATE TABLE core.reviews (
+    review_id               text,
+    order_id                text,
+    review_score            integer,
+    review_comment_title    text,
+    review_comment_message  text,
+    review_creation_date    timestamp,
+    review_answer_timestamp timestamp
+);
+INSERT INTO core.reviews
+SELECT review_id, order_id, review_score::integer, review_comment_title, review_comment_message, review_creation_date::timestamp, review_answer_timestamp::timestamp
+FROM raw.reviews;
+ALTER TABLE core.reviews ADD PRIMARY KEY (review_id, order_id);
+
 -- BLOCK 5: foreign keys (links between tables)
 ALTER TABLE core.order_items
     ADD FOREIGN KEY (order_id)  REFERENCES core.orders (order_id);
@@ -92,3 +108,5 @@ ALTER TABLE core.order_items
     ADD FOREIGN KEY (seller_id) REFERENCES core.sellers (seller_id);
 ALTER TABLE core.orders
     ADD FOREIGN KEY (customer_id) REFERENCES core.customers (customer_id);
+ALTER TABLE core.reviews
+    ADD FOREIGN KEY (order_id) REFERENCES core.orders (order_id);
