@@ -101,6 +101,24 @@ SELECT review_id, order_id, review_score::integer, review_comment_title, review_
 FROM raw.reviews;
 ALTER TABLE core.reviews ADD PRIMARY KEY (review_id, order_id);
 
+-- Table 6: products
+DROP TABLE IF EXISTS core.products CASCADE;
+CREATE TABLE core.products (
+    product_id                  text,
+    product_category_name       text,
+    product_name_lenght         integer,
+    product_description_lenght  integer,
+    product_photos_qty          integer,
+    product_weight_g            integer,
+    product_length_cm           integer,
+    product_height_cm           integer,
+    product_width_cm            integer
+);
+INSERT INTO core.products
+SELECT product_id, product_category_name, product_name_lenght::integer, product_description_lenght::integer, product_photos_qty::integer, product_weight_g::integer, product_length_cm::integer, product_height_cm::integer, product_width_cm::integer
+FROM raw.products;
+ALTER TABLE core.products ADD PRIMARY KEY (product_id);
+
 -- BLOCK 5: foreign keys (links between tables)
 ALTER TABLE core.order_items
     ADD FOREIGN KEY (order_id)  REFERENCES core.orders (order_id);

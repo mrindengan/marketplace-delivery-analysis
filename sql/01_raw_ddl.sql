@@ -51,3 +51,16 @@ CREATE TABLE raw.reviews (
     review_creation_date text,
     review_answer_timestamp text
 );
+
+DROP TABLE IF EXISTS raw.products;
+CREATE TABLE raw.products (
+    product_id text,
+    product_category_name text,
+    product_name_lenght text,
+    product_description_lenght text,
+    product_photos_qty text,
+    product_weight_g text,
+    product_length_cm text,
+    product_height_cm text,
+    product_width_cm text
+);
