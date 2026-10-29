@@ -119,6 +119,21 @@ SELECT product_id, product_category_name, product_name_lenght::integer, product_
 FROM raw.products;
 ALTER TABLE core.products ADD PRIMARY KEY (product_id);
 
+-- Table 7: category_translation
+DROP TABLE IF EXISTS core.category_translation CASCADE;
+CREATE TABLE core.category_translation (
+    product_category_name           text,
+    product_category_name_english   text
+);
+INSERT INTO core.category_translation
+SELECT product_category_name, product_category_name_english
+FROM raw.category_translation;
+INSERT INTO core.category_translation (product_category_name, product_category_name_english) -- HAND-ADDED 2026-10-29 (D-10): missing from the source CSV
+VALUES  ('portateis_cozinha_e_preparadores_de_alimentos', 'food_prep_and_small_kitchen_appliances'),
+        ('pc_gamer', 'pc_gamer');
+ALTER TABLE core.category_translation ADD PRIMARY KEY (product_category_name);
+
+
 -- BLOCK 5: foreign keys (links between tables)
 ALTER TABLE core.order_items
     ADD FOREIGN KEY (order_id)  REFERENCES core.orders (order_id);
@@ -128,3 +143,7 @@ ALTER TABLE core.orders
     ADD FOREIGN KEY (customer_id) REFERENCES core.customers (customer_id);
 ALTER TABLE core.reviews
     ADD FOREIGN KEY (order_id) REFERENCES core.orders (order_id);
+ALTER TABLE core.order_items
+    ADD FOREIGN KEY (product_id) REFERENCES core.products (product_id);
+ALTER TABLE core.products
+    ADD FOREIGN KEY (product_category_name) REFERENCES core.category_translation (product_category_name);

@@ -83,3 +83,10 @@ SELECT
     COUNT(*) FILTER (WHERE product_width_cm IS NULL) AS null_rows_width,
     COUNT(*) FILTER (WHERE product_width_cm = '') AS empty_rows_width
 FROM raw.products;
+
+-- 7. Is the key of category_translation unique?
+SELECT
+    COUNT(*) AS all_rows,
+    COUNT(DISTINCT product_category_name) AS distinct_keys,
+    COUNT(*) FILTER (WHERE product_category_name IS NULL OR product_category_name = '') AS missing_keys
+FROM raw.category_translation;

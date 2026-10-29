@@ -64,3 +64,9 @@ CREATE TABLE raw.products (
     product_height_cm text,
     product_width_cm text
 );
+
+DROP TABLE IF EXISTS raw.category_translation;
+CREATE TABLE raw.category_translation (
+    product_category_name text,
+    product_category_name_english text
+);

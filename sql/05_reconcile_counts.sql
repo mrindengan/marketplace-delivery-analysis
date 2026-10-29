@@ -20,4 +20,8 @@ SELECT 'reviews',
 UNION ALL
 SELECT 'products',
         (SELECT COUNT(*) FROM raw.products),
-        (SELECT COUNT(*) FROM core.products);
+        (SELECT COUNT(*) FROM core.products)
+UNION ALL
+SELECT 'category_translation',
+        (SELECT COUNT(*) FROM raw.category_translation),
+        (SELECT COUNT(*) FROM core.category_translation);
