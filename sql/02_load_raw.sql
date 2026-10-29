@@ -1,4 +1,4 @@
-TRUNCATE raw.orders, raw.order_items, raw.customers, raw.sellers, raw.reviews, raw.products, raw.category_translation;
+TRUNCATE raw.orders, raw.order_items, raw.customers, raw.sellers, raw.reviews, raw.products, raw.category_translation, raw.payments, raw.geolocation;
 \copy raw.orders FROM 'data/raw/olist_orders_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 \copy raw.order_items FROM 'data/raw/olist_order_items_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 \copy raw.customers FROM 'data/raw/olist_customers_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
@@ -6,3 +6,5 @@ TRUNCATE raw.orders, raw.order_items, raw.customers, raw.sellers, raw.reviews, r
 \copy raw.reviews FROM 'data/raw/olist_order_reviews_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 \copy raw.products FROM 'data/raw/olist_products_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 \copy raw.category_translation FROM 'data/raw/product_category_name_translation.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
+\copy raw.payments FROM 'data/raw/olist_order_payments_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
+\copy raw.geolocation FROM 'data/raw/olist_geolocation_dataset.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')

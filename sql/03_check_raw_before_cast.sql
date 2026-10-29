@@ -90,3 +90,38 @@ SELECT
     COUNT(DISTINCT product_category_name) AS distinct_keys,
     COUNT(*) FILTER (WHERE product_category_name IS NULL OR product_category_name = '') AS missing_keys
 FROM raw.category_translation;
+
+-- 8. Is the key of payments unique?
+SELECT
+    COUNT(*) AS all_rows,
+    COUNT(DISTINCT order_id) AS distinct_orders,
+    COUNT(DISTINCT (order_id, payment_sequential)) AS distinct_pairs,
+    COUNT(*) FILTER (WHERE order_id IS NULL OR order_id = '' OR payment_sequential IS NULL OR payment_sequential = '') AS missing_keys
+FROM raw.payments;
+
+-- 9. Missing values on payments: NULL vs ''
+SELECT
+    COUNT(*) AS all_rows,
+    COUNT(*) FILTER (WHERE payment_sequential IS NULL) AS null_rows_sequential,
+    COUNT(*) FILTER (WHERE payment_sequential = '') AS empty_rows_sequential,
+    COUNT(*) FILTER (WHERE payment_installments IS NULL) AS null_rows_installments,
+    COUNT(*) FILTER (WHERE payment_installments = '') AS empty_rows_installments,
+    COUNT(*) FILTER (WHERE payment_value IS NULL) AS null_rows_value,
+    COUNT(*) FILTER (WHERE payment_value = '') AS empty_rows_value
+FROM raw.payments;
+
+-- 10. Shape of geolocation: does the zip prefix repeat (so there is no key)?
+SELECT 
+    COUNT(*) AS all_rows,
+    COUNT(DISTINCT geolocation_zip_code_prefix) AS distinct_zips,
+    COUNT(*) FILTER (WHERE geolocation_zip_code_prefix IS NULL OR geolocation_zip_code_prefix = '') AS missing_zips
+FROM raw.geolocation;
+
+-- 11. Missing values on geolocation: NULL vs '' (lat and lng are the columns that get cast)
+SELECT
+    COUNT(*) AS all_rows,
+    COUNT(*) FILTER (WHERE geolocation_lat IS NULL) AS null_rows_lat,
+    COUNT(*) FILTER (WHERE geolocation_lat = '') AS empty_rows_lat,
+    COUNT(*) FILTER (WHERE geolocation_lng IS NULL) AS null_rows_long,
+    COUNT(*) FILTER (WHERE geolocation_lng = '') AS empty_rows_long
+FROM raw.geolocation;

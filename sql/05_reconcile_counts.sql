@@ -24,4 +24,12 @@ SELECT 'products',
 UNION ALL
 SELECT 'category_translation',
         (SELECT COUNT(*) FROM raw.category_translation),
-        (SELECT COUNT(*) FROM core.category_translation);
+        (SELECT COUNT(*) FROM core.category_translation)
+UNION ALL
+SELECT 'payments',
+        (SELECT COUNT(*) FROM raw.payments),
+        (SELECT COUNT(*) FROM core.payments)
+UNION ALL
+SELECT 'geolocation',
+        (SELECT COUNT(*) FROM raw.geolocation),
+        (SELECT COUNT(*) FROM core.geolocation);

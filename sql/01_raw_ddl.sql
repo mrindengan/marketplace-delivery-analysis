@@ -70,3 +70,21 @@ CREATE TABLE raw.category_translation (
     product_category_name text,
     product_category_name_english text
 );
+
+DROP TABLE IF EXISTS raw.payments;
+CREATE TABLE raw.payments (
+    order_id text,
+    payment_sequential text,
+    payment_type text,
+    payment_installments text,
+    payment_value text
+);
+
+DROP TABLE IF EXISTS raw.geolocation;
+CREATE TABLE raw.geolocation (
+    geolocation_zip_code_prefix text,
+    geolocation_lat text,
+    geolocation_lng text,
+    geolocation_city text,
+    geolocation_state text
+);

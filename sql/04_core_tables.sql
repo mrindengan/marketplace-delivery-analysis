@@ -133,6 +133,33 @@ VALUES  ('portateis_cozinha_e_preparadores_de_alimentos', 'food_prep_and_small_k
         ('pc_gamer', 'pc_gamer');
 ALTER TABLE core.category_translation ADD PRIMARY KEY (product_category_name);
 
+-- Table 8: payments
+DROP TABLE IF EXISTS core.payments CASCADE;
+CREATE TABLE core.payments (
+    order_id                text,
+    payment_sequential      integer,
+    payment_type            text,
+    payment_installments    integer,
+    payment_value           numeric(10,2)
+);
+INSERT INTO core.payments
+SELECT order_id, payment_sequential::integer, payment_type, payment_installments::integer, payment_value::numeric(10,2)
+FROM raw.payments;
+ALTER TABLE core.payments ADD PRIMARY KEY (order_id, payment_sequential);
+
+-- Table 9: geolocation
+-- No PRIMARY KEY and no FOREIGN KEY on purpose: a zip prefix repeats across many rows, so it cannot identify a row or be a parent key.
+DROP TABLE IF EXISTS core.geolocation CASCADE;
+CREATE TABLE core.geolocation(
+    geolocation_zip_code_prefix text,
+    geolocation_lat numeric,
+    geolocation_lng numeric,
+    geolocation_city text,
+    geolocation_state text
+);
+INSERT INTO core.geolocation
+SELECT geolocation_zip_code_prefix, geolocation_lat::numeric, geolocation_lng::numeric, geolocation_city, geolocation_state
+FROM raw.geolocation;
 
 -- BLOCK 5: foreign keys (links between tables)
 ALTER TABLE core.order_items
@@ -147,3 +174,5 @@ ALTER TABLE core.order_items
     ADD FOREIGN KEY (product_id) REFERENCES core.products (product_id);
 ALTER TABLE core.products
     ADD FOREIGN KEY (product_category_name) REFERENCES core.category_translation (product_category_name);
+ALTER TABLE core.payments
+    ADD FOREIGN KEY (order_id) REFERENCES core.orders (order_id);
