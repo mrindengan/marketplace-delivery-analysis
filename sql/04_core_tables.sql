@@ -50,6 +50,9 @@ SELECT  order_id,
         freight_value::numeric(10,2)
 FROM raw.order_items;
 ALTER TABLE core.order_items ADD PRIMARY KEY (order_id, order_item_id);
+ALTER TABLE core.order_items
+    ALTER COLUMN product_id
+    SET NOT NULL;           -- M-21 : product_id can never be empty, so a missing product_id is caught in future loads (data quality).
 
 -- Table 3: customers
 DROP TABLE IF EXISTS core.customers CASCADE;
